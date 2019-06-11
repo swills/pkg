@@ -2,5 +2,5 @@ build_test:
   stage: build
   script:
     - ./configure
-    - make
-    - make check
+    - make -j$(sysctl -n hw.ncpu) || make V=1
+    - make check || { kyua report --verbose ; exit 1 ;}
